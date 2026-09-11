@@ -1,7 +1,8 @@
-import Image from "next/image";
+import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { siteConfig } from "@/lib/site-config";
+import { MaskReveal } from "@/components/motion/MaskReveal";
 
 const guidance = [
   { label: "Temperatura", value: "8 °C a 12 °C" },
@@ -33,8 +34,8 @@ export function ServingGuide() {
             ))}
           </dl>
         </Reveal>
-        <Reveal className="serving-image" delay={1}>
-          <Image
+        <MaskReveal className="serving-image" delay={1}>
+          <ParallaxImage
             src={image.src}
             alt={image.alt}
             fill
@@ -42,7 +43,7 @@ export function ServingGuide() {
             className="serving-image__photo"
           />
           <span>Servir devagar é parte da experiência.</span>
-        </Reveal>
+        </MaskReveal>
       </div>
     </section>
   );

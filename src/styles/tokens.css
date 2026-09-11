@@ -1,0 +1,35 @@
+:root {
+  --color-black: #070504;
+  --color-black-soft: #100c0a;
+  --color-gold: #c69a55;
+  --color-gold-light: #ebcc8d;
+  --color-wine: #4e0618;
+  --color-ivory: #f1e9dc;
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 220ms;
+  --duration-base: 700ms;
+  --duration-slow: 1100ms;
+  --duration-reveal: 800ms;
+  --duration-hero: 1800ms;
+  --hero-step: 150ms;
+  --stagger-step: 100ms;
+  --duration-ceremony: 550ms;
+  --stagger-ceremony: 135ms;
+  --space-section: clamp(72px, 11vw, 170px);
+  --radius-seal: 50%;
+  --shadow-soft: 0 24px 80px #00000033;
+  --ink: var(--color-black);
+  --ink-soft: #100c0a;
+  --ink-raised: #17110e;
+  --wine: var(--color-wine);
+  --wine-deep: #27040e;
+  --gold: var(--color-gold);
+  --gold-light: var(--color-gold-light);
+  --gold-muted: #8d6838;
+  --champagne: #dbc6a2;
+  --ivory: var(--color-ivory);
+  --ivory-muted: #b9ad9d;
+  --line: rgba(220, 182, 111, 0.22);
+  --font-body: var(--font-sans), "Segoe UI", sans-serif;
+  --font-heading: var(--font-display), Georgia, serif;
+}

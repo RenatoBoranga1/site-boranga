@@ -1,3 +1,4 @@
+import { TextReveal } from "./TextReveal";
 type SectionHeadingProps = {
   eyebrow: string;
   title: string;
@@ -20,7 +21,7 @@ export function SectionHeading({
       data-tone={tone}
     >
       <p className="eyebrow">{eyebrow}</p>
-      <h2>{title}</h2>
+      <h2><TextReveal lines={title === "A essência da jabuticaba" ? ["A essência da", "jabuticaba"] : [title]} /></h2>
       {intro && <p className="section-intro">{intro}</p>}
     </div>
   );

@@ -6,7 +6,7 @@ type BrandMarkProps = {
 export function BrandMark({ compact = false, inverse = false }: BrandMarkProps) {
   return (
     <span className="brand-mark" data-compact={compact || undefined}>
-      <span className="brand-mark__seal" aria-hidden="true">
+      <span className="brand-mark__seal light-sweep" data-light-sweep aria-hidden="true">
         B
       </span>
       <span className="brand-mark__wording">

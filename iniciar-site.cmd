@@ -19,8 +19,8 @@ if %errorlevel% equ 0 (
 
 echo.
 echo Nao foi possivel encontrar Node.js e pnpm.
-echo Instale o Node.js 20 ou superior em https://nodejs.org/
-echo Depois execute: corepack enable
+echo Instale o Node.js 24 ou superior em https://nodejs.org/
+echo Depois execute: npm install -g pnpm@11.19.0
 echo.
 pause
 exit /b 1

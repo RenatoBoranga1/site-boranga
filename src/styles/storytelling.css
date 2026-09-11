@@ -1,0 +1,314 @@
+/* Scroll stories remain complete documents before the motion runtime attaches. */
+.section.sensory-section,
+.section.ritual-section {
+  overflow: visible;
+}
+
+.sensory-section > .page-shell,
+.ritual-section > .page-shell {
+  position: relative;
+  z-index: 1;
+}
+
+.sensory-story {
+  display: grid;
+  gap: 36px;
+  margin-top: clamp(40px, 6vw, 80px);
+}
+
+.sensory-story__visual {
+  min-width: 0;
+}
+
+.sensory-story__frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--wine-deep);
+}
+
+.sensory-story__frame::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 58%, #070504a6);
+  pointer-events: none;
+  content: "";
+}
+
+.sensory-story__image {
+  object-fit: cover;
+  object-position: center 58%;
+}
+
+.sensory-story__signature {
+  position: absolute;
+  z-index: 2;
+  right: 24px;
+  bottom: 24px;
+  left: 24px;
+  padding-top: 15px;
+  border-top: 1px solid #ebcc8d52;
+  color: var(--champagne);
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  letter-spacing: .24em;
+}
+
+.sensory-story__steps {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sensory-story .sensory-story__step {
+  display: flex;
+  min-height: 200px;
+  padding: 29px 0;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.sensory-story__step:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.sensory-story__note {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: baseline;
+}
+
+.sensory-story__note .sensory-card__number {
+  color: var(--champagne);
+  transition: color var(--duration-base) var(--ease-premium);
+}
+
+.sensory-story__note h3 {
+  margin: 0;
+  color: var(--champagne);
+  font-family: var(--font-body);
+  font-size: .7rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  transition: color var(--duration-base) var(--ease-premium);
+}
+
+.sensory-story__note p {
+  min-height: 0;
+  margin: 22px 0 28px;
+  grid-column: 2;
+  color: var(--ivory-muted);
+  font-family: var(--font-heading);
+  font-size: clamp(1.85rem, 5.8vw, 2.9rem);
+  letter-spacing: -.025em;
+  line-height: 1.12;
+  transition: color var(--duration-base) var(--ease-premium), transform var(--duration-base) var(--ease-premium);
+}
+
+.sensory-story__note .sensory-meter {
+  grid-column: 2;
+}
+
+.sensory-story__note .sensory-meter i {
+  opacity: .45;
+  transform: scaleX(.75);
+  transform-origin: left;
+  transition: opacity var(--duration-base) var(--ease-premium), transform var(--duration-base) var(--ease-premium);
+}
+
+.sensory-story__step[data-active="true"] .sensory-card__number,
+.sensory-story__step[data-active="true"] h3 {
+  color: var(--gold-light);
+}
+
+.sensory-story__step[data-active="true"] p {
+  color: var(--ivory);
+  transform: translateX(4px);
+}
+
+.sensory-story__step[data-active="true"] .sensory-meter i {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* A fine, uninterrupted gold thread guides the four ceremonial gestures. */
+.ritual-section::before {
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  background: radial-gradient(ellipse at 70% 42%, #c69a550a, transparent 64%);
+}
+
+.ritual-section .ritual-grid {
+  align-items: start;
+}
+
+.ritual-section .ritual-content {
+  padding-block: 0;
+}
+
+.ritual-steps.ritual-story {
+  --ritual-step-height: 132px;
+  position: relative;
+  margin-top: 38px;
+  border-top: 0;
+}
+
+.ritual-story::before,
+.ritual-story::after {
+  position: absolute;
+  top: 34px;
+  bottom: calc(var(--ritual-step-height) - 34px);
+  left: 15px;
+  width: 1px;
+  pointer-events: none;
+  content: "";
+}
+
+.ritual-story::before {
+  background: var(--line);
+}
+
+.ritual-story::after {
+  background: linear-gradient(to bottom, var(--gold-muted), var(--gold-light));
+  transform: scaleY(var(--story-progress, 0));
+  transform-origin: top;
+}
+
+.ritual-story li {
+  position: relative;
+  border-bottom: 0;
+}
+
+.ritual-story .reveal {
+  position: relative;
+  z-index: 1;
+  min-height: var(--ritual-step-height);
+  padding-block: 18px 28px;
+  align-items: start;
+  grid-template-columns: 52px minmax(0, 1fr);
+}
+
+.ritual-story .ritual-story__number {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  margin-top: 1px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--champagne);
+  font-size: .6rem;
+  letter-spacing: .07em;
+  transition: color var(--duration-base) var(--ease-premium), border-color var(--duration-base) var(--ease-premium), background var(--duration-base) var(--ease-premium);
+}
+
+.ritual-story h3 {
+  padding-top: 3px;
+  color: var(--champagne);
+  font-size: clamp(1.8rem, 4vw, 2.3rem);
+  transition: color var(--duration-base) var(--ease-premium), transform var(--duration-base) var(--ease-premium);
+}
+
+.ritual-story p {
+  max-width: 340px;
+  margin-top: 10px;
+  color: var(--ivory-muted);
+  line-height: 1.65;
+  transition: color var(--duration-base) var(--ease-premium);
+}
+
+.ritual-story li[data-active="true"] .ritual-story__number {
+  border-color: var(--gold);
+  background: #241b0f;
+  color: var(--gold-light);
+}
+
+.ritual-story li[data-active="true"] h3 {
+  color: var(--gold-light);
+  transform: translateX(4px);
+}
+
+.ritual-story li[data-active="true"] p {
+  color: var(--ivory);
+}
+
+@media (min-width: 860px) {
+  .sensory-story {
+    gap: clamp(56px, 8vw, 120px);
+    grid-template-columns: 1fr .88fr;
+    align-items: start;
+  }
+
+  .sensory-story__visual {
+    position: sticky;
+    top: 104px;
+    align-self: start;
+  }
+
+  .sensory-story__frame {
+    height: min(660px, calc(100svh - 142px));
+    min-height: 320px;
+    aspect-ratio: auto;
+  }
+
+  .sensory-story .sensory-story__step {
+    min-height: clamp(280px, 42svh, 390px);
+    padding: 44px 0;
+  }
+
+  .sensory-story__note p {
+    font-size: clamp(2.05rem, 3.7vw, 3.35rem);
+  }
+
+  .ritual-section .ritual-visual {
+    min-height: 740px;
+  }
+
+  .ritual-steps.ritual-story {
+    --ritual-step-height: 150px;
+  }
+
+  .ritual-story .reveal {
+    grid-template-columns: 62px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 859px) {
+  .ritual-section .ritual-grid {
+    gap: 42px;
+  }
+
+  .ritual-section .ritual-visual {
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sensory-story__visual {
+    position: relative;
+    top: auto;
+  }
+
+  .sensory-story .sensory-story__step {
+    min-height: 200px;
+  }
+
+  .sensory-story__step[data-active="true"] p,
+  .sensory-story__note .sensory-meter i,
+  .ritual-story li[data-active="true"] h3,
+  .ritual-story::after {
+    transform: none;
+  }
+}

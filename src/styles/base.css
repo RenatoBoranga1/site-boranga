@@ -1,0 +1,126 @@
+
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  background: var(--ink);
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--ivory);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+body[data-menu-open="true"] {
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 4px;
+}
+
+.page-shell {
+  width: min(100% - 40px, 1240px);
+  margin-inline: auto;
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(92px, 11vw, 170px);
+  overflow: hidden;
+}
+
+.section-heading {
+  max-width: 680px;
+}
+
+.section-heading[data-align="center"] {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-heading h2,
+.ingredients-section h2,
+.gift-section h2 {
+  margin: 14px 0 0;
+  color: var(--ivory);
+  font-family: var(--font-heading);
+  font-size: clamp(2.75rem, 6vw, 5.8rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.section-heading[data-tone="light"] h2,
+.section-heading[data-tone="light"] .section-intro {
+  color: #1c1410;
+}
+
+.eyebrow,
+.hero__edition {
+  margin: 0;
+  color: var(--gold);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.section-heading[data-tone="light"] .eyebrow {
+  color: #765125;
+}
+
+.section-intro {
+  max-width: 600px;
+  margin: 26px 0 0;
+  color: var(--ivory-muted);
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.85;
+}
+
+.section-heading[data-align="center"] .section-intro {
+  margin-inline: auto;
+}
+
+.text-gold-gradient {
+  color: var(--gold-light);
+  background: linear-gradient(105deg, #8e632e 0%, #f1d69c 48%, #a87334 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-ivory {
+  color: var(--ivory);
+}

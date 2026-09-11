@@ -1,7 +1,9 @@
-import Image from "next/image";
-import { Reveal } from "@/components/ui/Reveal";
+import { ParallaxImage } from "@/components/ui/ParallaxImage";
+import { FadeUp } from "@/components/motion/FadeUp";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { siteConfig } from "@/lib/site-config";
+import { MaskReveal } from "@/components/motion/MaskReveal";
+import { LineReveal } from "@/components/motion/LineReveal";
 
 export function BrandStory() {
   const image = siteConfig.images.story;
@@ -9,7 +11,7 @@ export function BrandStory() {
   return (
     <section id="historia" className="section section--ivory">
       <div className="page-shell story-grid">
-        <Reveal className="story-copy">
+        <FadeUp className="story-copy">
           <SectionHeading eyebrow="A origem" title="A história BORANGA" tone="light" />
           <div className="prose-luxury">
             <p>
@@ -26,6 +28,7 @@ export function BrandStory() {
               exclusividade.
             </p>
           </div>
+          <LineReveal className="story-divider" />
           <div className="story-signature" aria-label="Características do produto">
             <span>
               <strong>750 mL</strong>
@@ -40,10 +43,10 @@ export function BrandStory() {
               Identidade
             </span>
           </div>
-        </Reveal>
+        </FadeUp>
 
-        <Reveal className="portrait-frame" delay={1}>
-          <Image
+        <MaskReveal className="portrait-frame" delay={1}>
+          <ParallaxImage
             src={image.src}
             alt={image.alt}
             fill
@@ -51,7 +54,7 @@ export function BrandStory() {
             className="portrait-frame__image"
           />
           <span className="portrait-frame__caption">Tempo · detalhe · presença</span>
-        </Reveal>
+        </MaskReveal>
       </div>
     </section>
   );

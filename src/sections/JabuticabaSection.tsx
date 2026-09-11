@@ -1,7 +1,9 @@
-import Image from "next/image";
+import { ParallaxImage } from "@/components/ui/ParallaxImage";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { siteConfig } from "@/lib/site-config";
+import { MaskReveal } from "@/components/motion/MaskReveal";
+import { SectionTransition } from "@/components/motion/SectionTransition";
 
 const qualities = ["Brasileira", "Frutada", "Profunda", "Marcante"];
 
@@ -10,10 +12,10 @@ export function JabuticabaSection() {
 
   return (
     <section id="essencia" className="section essence-section">
-      <div className="essence-glow" aria-hidden="true" />
+      <SectionTransition tone="wine" />
       <div className="page-shell essence-grid">
-        <Reveal className="essence-visual">
-          <Image
+        <MaskReveal className="essence-visual">
+          <ParallaxImage
             src={image.src}
             alt={image.alt}
             fill
@@ -23,7 +25,7 @@ export function JabuticabaSection() {
           <div className="essence-orbit" aria-hidden="true">
             <span />
           </div>
-        </Reveal>
+        </MaskReveal>
 
         <Reveal className="essence-copy" delay={1}>
           <SectionHeading

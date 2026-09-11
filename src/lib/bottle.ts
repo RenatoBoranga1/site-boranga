@@ -1,65 +1,46 @@
-import type {
-  BottleIdentityData,
-  BottleUrlInput,
-  RawSearchParams,
-} from "@/types/bottle";
+import { getBottleByToken } from "../data/bottles";
+import type { BottleIdentityData, BottleUrlInput, RawSearchParams } from "../types/bottle";
 
-const MAX_CODE_LENGTH = 12;
-const MAX_NUMBER_LENGTH = 7;
-
-function firstValue(value: string | string[] | undefined) {
-  return Array.isArray(value) ? value[0] : value;
-}
-
+// Reject ambiguous or damaged codes instead of silently repairing their identity.
 export function sanitizeLot(value: string | string[] | undefined) {
-  const raw = firstValue(value)?.trim().toUpperCase();
-  if (!raw) return undefined;
-
-  const sanitized = raw.replace(/[^A-Z0-9-]/g, "").slice(0, MAX_CODE_LENGTH);
-  return sanitized || undefined;
+  if (typeof value !== "string") return undefined;
+  const raw = value.trim().toUpperCase();
+  return /^[A-Z0-9][A-Z0-9-]{0,11}$/.test(raw) ? raw : undefined;
 }
-
-export function sanitizeNumericCode(
-  value: string | string[] | undefined,
-) {
-  const raw = firstValue(value)?.trim();
-  if (!raw) return undefined;
-
-  const sanitized = raw.replace(/\D/g, "").slice(0, MAX_NUMBER_LENGTH);
-  if (!sanitized || Number(sanitized) < 1) return undefined;
-
-  return sanitized;
+export function sanitizeNumericCode(value: string | string[] | undefined) {
+  if (typeof value !== "string") return undefined;
+  const raw = value.trim();
+  return /^\d{1,7}$/.test(raw) && Number(raw) > 0 ? raw : undefined;
 }
-
-export function getBottleIdentity(
-  searchParams: RawSearchParams,
-): BottleIdentityData {
-  const lot = sanitizeLot(searchParams.lote);
-  const bottle = sanitizeNumericCode(searchParams.garrafa);
-  const total = sanitizeNumericCode(searchParams.total);
-
-  return {
-    lot,
-    bottle,
-    total,
-    edition: "Edição Especial",
-    isPersonalized: Boolean(lot && bottle),
+export function getBottleIdentity(params: RawSearchParams): BottleIdentityData {
+  const base: BottleIdentityData = {
+    edition: "Edição Especial", isPersonalized: false, status: "generic", source: "none",
   };
+  if (params.token !== undefined) {
+    const record = typeof params.token === "string" && /^[A-Za-z0-9-]{1,80}$/.test(params.token)
+      ? getBottleByToken(params.token) : undefined;
+    if (!record) return { ...base, status: "invalid", source: "token" };
+    const identity = getBottleIdentity({ lote: record.lot, garrafa: record.bottle, total: record.total });
+    return { ...identity, source: "token", token: identity.status === "valid" ? record.token : undefined };
+  }
+  if (![params.lote, params.garrafa, params.total].some((value) => value !== undefined)) return base;
+  const lot = sanitizeLot(params.lote);
+  const bottle = sanitizeNumericCode(params.garrafa);
+  const total = sanitizeNumericCode(params.total);
+  // Legacy links without total remain supported; a supplied total must be valid.
+  if (!lot || !bottle || (params.total !== undefined && !total) || (total && Number(bottle) > Number(total))) {
+    return { ...base, status: "invalid", source: "query" };
+  }
+  return { ...base, lot, bottle, total, status: "valid", source: "query", isPersonalized: true };
 }
-
 export function buildBottleUrl(baseUrl: string, input: BottleUrlInput) {
   const url = new URL(baseUrl);
-  url.searchParams.set("lote", sanitizeLot(input.lot) ?? "");
-  url.searchParams.set("garrafa", sanitizeNumericCode(input.bottle) ?? "");
-  url.searchParams.set("total", sanitizeNumericCode(input.total) ?? "");
+  if (!["https:", "http:"].includes(url.protocol) || url.username || url.password) throw new Error("Use uma URL HTTP(S) sem credenciais.");
+  const identity = getBottleIdentity({ lote: input.lot, garrafa: input.bottle, total: input.total });
+  if (identity.status !== "valid" || !identity.total) throw new Error("Identificação inválida.");
+  url.searchParams.delete("token");
+  url.searchParams.set("lote", identity.lot!);
+  url.searchParams.set("garrafa", identity.bottle!);
+  url.searchParams.set("total", identity.total);
   return url.toString();
-}
-
-export function getBottleShareText(bottle: BottleIdentityData) {
-  if (!bottle.isPersonalized) {
-    return "Conheça BORANGA — Licor Extra Luxo de Jabuticaba.";
-  }
-
-  const total = bottle.total ? ` de ${bottle.total}` : "";
-  return `Minha garrafa BORANGA é a ${bottle.bottle}${total}, do lote ${bottle.lot}.`;
 }

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { siteConfig } from "@/lib/site-config";
+import { StaggerGroup } from "@/components/motion/StaggerGroup";
 
 const experiences = [
   {
@@ -35,9 +36,9 @@ export function ExperienceCards() {
             intro="Do serviço puro a uma assinatura contemporânea, escolha o ritual que combina com o seu momento."
           />
         </Reveal>
-        <div className="experience-grid">
+        <StaggerGroup className="experience-grid">
           {experiences.map((experience, index) => (
-            <Reveal key={experience.title} className="experience-card" delay={(index % 3) as 0 | 1 | 2}>
+            <article key={experience.title} className="experience-card">
               <div className="experience-card__image">
                 <Image
                   src={experience.image.src}
@@ -53,9 +54,9 @@ export function ExperienceCards() {
                 <h3>{experience.title}</h3>
                 <div>{experience.description}</div>
               </div>
-            </Reveal>
+            </article>
           ))}
-        </div>
+        </StaggerGroup>
       </div>
     </section>
   );

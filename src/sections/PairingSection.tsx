@@ -1,5 +1,9 @@
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import Image from "next/image";
+import { siteConfig } from "@/lib/site-config";
+
+const pairingImages = [siteConfig.images.essence, siteConfig.images.story, siteConfig.images.gift, siteConfig.images.ritual, siteConfig.images.ambience, siteConfig.images.celebration];
 
 const pairings = [
   { title: "Chocolate amargo", note: "Intensidade que encontra intensidade", glyph: "◆" },
@@ -26,7 +30,10 @@ export function PairingSection() {
         <div className="pairing-grid">
           {pairings.map((pairing, index) => (
             <Reveal key={pairing.title} className="pairing-card" delay={(index % 3) as 0 | 1 | 2}>
-              <span aria-hidden="true">{pairing.glyph}</span>
+              <div className="pairing-card__image">
+                <Image src={pairingImages[index].src} alt={pairingImages[index].alt} fill sizes="(max-width: 390px) 100vw, (max-width: 859px) 50vw, 33vw" />
+              </div>
+              <span className="pairing-card__glyph" aria-hidden="true">{pairing.glyph}</span>
               <h3>{pairing.title}</h3>
               <p>{pairing.note}</p>
             </Reveal>

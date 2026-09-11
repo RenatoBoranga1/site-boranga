@@ -3,6 +3,8 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { siteConfig } from "@/lib/site-config";
 import type { BottleIdentityData } from "@/types/bottle";
+import { getIdentityLabel } from "@/lib/bottle-display";
+import { TiltSurface } from "@/components/motion/TiltSurface";
 
 type BottleIdentityProps = {
   bottle: BottleIdentityData;
@@ -15,6 +17,7 @@ export function BottleIdentity({ bottle }: BottleIdentityProps) {
     <section id="sua-garrafa" className="section bottle-section">
       <div className="page-shell bottle-grid">
         <Reveal className="bottle-image">
+          <TiltSurface>
           <Image
             src={image.src}
             alt={image.alt}
@@ -22,16 +25,18 @@ export function BottleIdentity({ bottle }: BottleIdentityProps) {
             sizes="(max-width: 820px) 100vw, 43vw"
             className="bottle-image__photo"
           />
-          <div className="bottle-image__monogram" aria-hidden="true">B</div>
+          </TiltSurface>
+          <div className="bottle-image__monogram light-sweep" data-light-sweep aria-hidden="true">B</div>
         </Reveal>
 
         <Reveal className="bottle-content" delay={1}>
           <SectionHeading
-            eyebrow="Origem identificada"
+            eyebrow="Detalhes da edição"
             title="Sua garrafa BORANGA"
             intro={
               bottle.isPersonalized
                 ? "Esta garrafa faz parte de uma produção especial BORANGA."
+                : bottle.status === "invalid" ? "Não foi possível validar esta identificação."
                 : "Escaneie o QR Code de uma garrafa numerada para revelar sua identidade individual."
             }
           />
@@ -59,14 +64,13 @@ export function BottleIdentity({ bottle }: BottleIdentityProps) {
               <span aria-hidden="true">B</span>
               <p>
                 <small>Produção</small>
-                Edição Especial BORANGA
+                {getIdentityLabel(bottle)}
               </p>
             </div>
           )}
 
           <p className="identity-note">
-            Cada identificação conecta o rótulo físico à experiência digital da
-            sua edição.
+            {bottle.isPersonalized ? getIdentityLabel(bottle) : "Cada identificação conecta o rótulo físico à experiência digital da sua edição."}
           </p>
         </Reveal>
       </div>
